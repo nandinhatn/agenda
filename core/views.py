@@ -101,3 +101,10 @@ def json_lista_evento(request, id_usuario):
 
     return JsonResponse(list(evento), safe= False)
 
+def historico(request):
+    usuario = request.user
+    data_atual = datetime.now()
+    evento = Evento.objects.filter(usuario=usuario,data_evento__lt=data_atual)
+    # gt é maior e lt é menor
+    dados = {'eventos': evento}
+    return render(request, 'agenda.html', dados)
